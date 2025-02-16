@@ -1,0 +1,7 @@
+.header-background {
+    background: linear-gradient(rgb(0,0,0,0.7), rgb(0,0,0,0.7));
+    background-image: url('./src/assets/Header.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 30vh;
+}
