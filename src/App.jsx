@@ -1,18 +1,21 @@
 import Navbar from './components/Navbar/Navbar'
-import Home from './components/Home'
+// import Home from './components/Home'
+import Cart from './components/Cart'
 import Footer from './components/Footer/Footer'
+
 // import RegisterPage from './components/Register/RegisterPage'
 // import LoginPage from './components/Login/LoginPage'
 
-const app = () => {
+function app () {
   return (
-  <>
-      <Navbar/>
-      <Home />
-      {/*<RegisterPage/>*/}
-      {/*<LoginPage/>*/}
-      <Footer/>
-  </>
+    <>
+      <Navbar />
+      {/* <Home /> */}
+      <Cart />
+      {/* <RegisterPage/> */}
+      {/* <LoginPage/> */}
+      <Footer />
+    </>
   )
 }
 

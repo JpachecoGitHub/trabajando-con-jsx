@@ -1,5 +1,3 @@
-
-
 const button = ({ text, className, onClick }) => {
   return (
     <button className={className} onClick={onClick}>
@@ -8,4 +6,4 @@ const button = ({ text, className, onClick }) => {
   )
 }
 
-export default button;
+export default button

@@ -1,38 +1,34 @@
-import Button from "../Button";
-import './CardPizza.css';
+import Button from '../Button'
 
-const Cardpizza = ({ imagen, name, price, ingredients }) => {
-  const ingredientes = ingredients.sort().join(",");
-
+const Cardpizza = ({ img, name, price, ingredients, desc }) => {
   return (
-    <div className="card-container"> 
-      <div className="card" style={{ width: "25rem" }}>
-        <img src={imagen} className="card-img-top" alt={name} />
-        <div className="card-body">
-          <h5 className="card-title">{name}</h5>
-          <hr />
-          <ul className="list-group list-group-flush">
-            <h6> Ingredientes: </h6>
-            <li className="list-group-item">{ ingredientes }</li>
+    <div className='card-container d-flex justify-content-center'>
+      <div className='card' style={{ width: '25rem' }}>
+        <img src={img} className='card-img-top' alt={name} />
+        <div className='card-body'>
+          <h2 className='card-title'>{name}</h2>
+          <ul className='list-unstyled mb-0 mt-3 text-muted'>
+            <h6><strong>Ingredientes:</strong></h6>
+            {ingredients.map((item) => (
+              <li className='card-text' key={item}>{item}</li>
+            ))}
           </ul>
-          <hr />
-          <p className="card-text">Precio: ${price}</p>
-          <div className="card-body" style={{ display: 'flex', justifyContent: 'space-around' }}>
-          <Button
-            text="Ver Más"
-            className="btn btn-primary"
-            onClick={() => console.log("Ver Más")}
-          />
-          <Button
-            text="Añadir"
-            className="btn btn-secondary"
-            onClick={() => console.log("Añadir")}
-          />
+          <p className='list-group-item'><strong>Descripción:</strong> {desc}</p>
+          <p className='card-text'><strong>Precio:</strong> ${price}</p>
         </div>
+        <div>
+          <div className='card-body' style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+            <Button
+              text='Añadir al Carrito'
+              className='btn btn-dark'
+              style={{ height: '40px' }}
+              onClick={() => console.log('Añadir al Carrito')}
+            />
+          </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Cardpizza;
+export default Cardpizza
