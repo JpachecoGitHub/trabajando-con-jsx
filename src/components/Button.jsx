@@ -1,4 +1,4 @@
-const button = ({ text, className, onClick }) => {
+const Button = ({ text, className, onClick }) => {
   return (
     <button className={className} onClick={onClick}>
       {text}
@@ -6,4 +6,4 @@ const button = ({ text, className, onClick }) => {
   )
 }
 
-export default button
+export default Button
