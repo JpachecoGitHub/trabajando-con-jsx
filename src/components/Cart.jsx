@@ -4,24 +4,35 @@ import Button from './Button'
 
 const Cart = () => {
   const [cart, setCart] = useState(pizzaCart)
-  console.log('Estado inicial de cart:', cart)
 
   const calcularTotal = () => {
     return cart.reduce((total, item) => total + item.price * item.count, 0)
   }
 
-  const aumentarCantidad = (id) => {
-    setCart(cart.map(item =>
-      item.id === id ? { ...item, count: item.count + 1 } : item
-    ))
-    console.log('Cart después de aumentar:', cart)
+  const disminuirCantidad = (pizzaId) => {
+    const nuwCart = [...Cart]
+    const buscarPizza = nuwCart.filter(p => p.id === pizzaId)
+
+    if (buscarPizza.count > 1) {
+      buscarPizza.count -= 1
+    } else {
+      setCart(nuwCart.filter(p => p.id !== pizzaId))
+      return
+    }
+    setCart(nuwCart)
   }
 
-  const disminuirCantidad = (id) => {
-    setCart(cart.map(item =>
-      item.id === id ? { ...item, count: Math.max(1, item.count - 1) } : item
-    ))
-    console.log('Cart después de disminuir:', cart)
+  const aumentarCantidad = (pizzaId) => {
+    const nuwCart = [...Cart]
+    const buscarPizza = nuwCart.find(p => p.id === pizzaId)
+
+    if (buscarPizza) {
+      buscarPizza.count += 1
+    } else {
+      console.warn(`Pizza con ID ${pizzaId} no encontrada en el carrito.`)
+      return
+    }
+    setCart(nuwCart)
   }
 
   return (
@@ -46,12 +57,24 @@ const Cart = () => {
                   <p className='card-text'> Precio: {item.price}</p>
 
                   <div className='d-flex align-items-center gap-2'>
-                    <button type='button' className='btn btn-outline-danger' onClick={() => disminuirCantidad(item.id)} disabled={item.count <= 1}> - </button>
+                    <button
+                      type='button'
+                      className='btn btn-outline-danger'
+                      onClick={() => disminuirCantidad(item.id)}
+                      disabled={item.count <= 1}
+                    >
+                      -
+                    </button>
 
-                    <span> {item.count} </span>
+                    <span>{item.count}</span>
 
-                    <button type='button' className='btn btn-outline-success' onClick={() => aumentarCantidad(item.id)}> + </button>
-
+                    <button
+                      type='button'
+                      className='btn btn-outline-success'
+                      onClick={() => aumentarCantidad(item.id)}
+                    >
+                      +
+                    </button>
                   </div>
                 </div>
               </div>
