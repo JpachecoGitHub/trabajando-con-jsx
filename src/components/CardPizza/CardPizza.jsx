@@ -1,6 +1,15 @@
+import React, { useContext } from 'react'
 import Button from '../Button'
+import { CartContext } from '../../Context/CartContext'
 
-const Cardpizza = ({ img, name, price, ingredients, desc }) => {
+const Cardpizza = ({ img, name, price, ingredients, desc, id }) => {
+  const { agregarAlCarrito } = useContext(CartContext)
+
+  const handleAgregarAlCarrito = () => {
+    console.log('Agregando al carrito:', { id, name, price, img })
+    agregarAlCarrito({ id, name, price, img })
+  }
+
   return (
     <div className='card-container d-flex justify-content-center'>
       <div className='card' style={{ width: '25rem' }}>
@@ -22,8 +31,10 @@ const Cardpizza = ({ img, name, price, ingredients, desc }) => {
               text='Añadir al Carrito'
               className='btn btn-dark'
               style={{ height: '40px' }}
-              onClick={() => console.log('Añadir al Carrito')}
-            />
+              onClick={handleAgregarAlCarrito}
+            >
+              Agregar al Carro
+            </Button>
           </div>
         </div>
       </div>

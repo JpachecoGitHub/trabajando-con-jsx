@@ -1,22 +1,28 @@
-import Navbar from './components/Navbar/Navbar'
-// import Home from './components/Home'
-import Cart from './components/Cart'
-import Footer from './components/Footer/Footer'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-// import RegisterPage from './components/Register/RegisterPage'
-// import LoginPage from './components/Login/LoginPage'
+import { Home, Cart, Footer, Navegador, RegisterPage, LoginPage, NotFound, Profile, Pizza } from './components/index'
+import CartProvider from './Context/CartContext'
 
-function app () {
+const App = () => {
   return (
     <>
-      <Navbar />
-      {/* <Home /> */}
-      <Cart />
-      {/* <RegisterPage/> */}
-      {/* <LoginPage/> */}
-      <Footer />
+      <BrowserRouter>
+        <CartProvider>
+          <Navegador />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/Pizza/:id' element={<Pizza />} />
+            <Route path='/Register' element={<RegisterPage />} />
+            <Route path='/Login' element={<LoginPage />} />
+            <Route path='/Profile' element={<Profile />} />
+            <Route path='/Cart' element={<Cart />} />
+            <Route path='*' element={<NotFound />} />
+          </Routes>
+          <Footer />
+        </CartProvider>
+      </BrowserRouter>
     </>
   )
 }
 
-export default app
+export default App
