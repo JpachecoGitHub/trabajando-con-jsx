@@ -53,10 +53,10 @@ const Home = () => {
               price={pizza.price}
               ingredients={pizza.ingredients}
               desc={pizza.desc}
+              id={pizza.id}
               className='card h-100 shadow-sm'
             />
           ))}
-          <home />
         </div>
       </main>
     </>

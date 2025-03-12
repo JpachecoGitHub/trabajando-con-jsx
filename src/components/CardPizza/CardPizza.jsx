@@ -6,7 +6,7 @@ const Cardpizza = ({ img, name, price, ingredients, desc, id }) => {
   const { agregarAlCarrito } = useContext(CartContext)
 
   const handleAgregarAlCarrito = () => {
-    console.log('Agregando al carrito:', { id, name, price, img })
+    console.log('Agregando al carrito:', { id, name, price, img, desc })
     agregarAlCarrito({ id, name, price, img })
   }
 

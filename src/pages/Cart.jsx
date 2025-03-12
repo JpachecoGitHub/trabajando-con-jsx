@@ -43,7 +43,6 @@ const Cart = () => {
                       type='button'
                       className='btn btn-outline-danger'
                       onClick={() => disminuir(item.id)}
-                      disabled={item.quantity <= 1}
                     >
                       -
                     </button>
