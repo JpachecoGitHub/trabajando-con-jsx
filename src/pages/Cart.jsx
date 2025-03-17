@@ -1,9 +1,11 @@
 import { useContext } from 'react'
 import Button from '../components/Button'
-import { CartContext } from '../Context/CartContext'
+import { CartContext } from '../Contexts/CartContext'
+import { UserContext } from '../Contexts/UserContext'
 
 const Cart = () => {
   const { cart, calcularTotal, aumentar, disminuir } = useContext(CartContext)
+  const { token } = useContext(UserContext)
 
   if (!cart || cart.length === 0) {
     return (
@@ -68,7 +70,12 @@ const Cart = () => {
           <h3> Total: $ {calcularTotal(cart)} </h3>
         </div>
         <div className='d-flex justify-content-center mb-3'>
-          <Button text='Pagar' className='btn btn-dark' onClick={() => console.log('Pagar')} />
+          <Button
+            text='Pagar'
+            className='btn btn-dark'
+            onClick={() => console.log('Pagar')}
+            disabled={!token}
+          />
         </div>
       </div>
     </div>

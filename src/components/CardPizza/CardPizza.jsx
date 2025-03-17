@@ -1,8 +1,16 @@
 import React, { useContext } from 'react'
 import Button from '../Button'
-import { CartContext } from '../../Context/CartContext'
+import { CartContext } from '../../Contexts/CartContext'
+import { useNavigate } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 const Cardpizza = ({ img, name, price, ingredients, desc, id }) => {
+  const navigate = useNavigate()
+
+  const irAPizzas = () => {
+    navigate(`/api/pizzas/${id}`)
+  }
+
   const { agregarAlCarrito } = useContext(CartContext)
 
   const handleAgregarAlCarrito = () => {
@@ -27,14 +35,21 @@ const Cardpizza = ({ img, name, price, ingredients, desc, id }) => {
         </div>
         <div>
           <div className='card-body' style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
+            {/* <Link to={`/api/pizzas/${id}`} className='btn btn-tertiary border border-black' style={{ height: '40px' }}>
+              Ver Mas 👀
+            </Link> */}
             <Button
-              text='Añadir al Carrito'
-              className='btn btn-dark'
+              text='Ver Mas 👀'
+              className='btn btn-tertiary border border-black'
+              style={{ height: '40px' }}
+              onClick={irAPizzas}
+            />
+            <Button
+              text='Añadir 🛒'
+              className='btn btn-dark border border-black'
               style={{ height: '40px' }}
               onClick={handleAgregarAlCarrito}
-            >
-              Agregar al Carro
-            </Button>
+            />
           </div>
         </div>
       </div>

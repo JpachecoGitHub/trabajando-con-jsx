@@ -1,4 +1,4 @@
-export const pizzas = [
+/* export const pizzas = [
   {
     desc: 'La pizza napolitana, de masa tierna y delgada pero bordes altos, es la versión propia de la cocina napolitana de la pizza redonda. El término pizza napoletana, por su importancia histórica o regional, se emplea en algunas zonas como sinónimo de pizza tonda.',
     id: 'P001',
@@ -72,4 +72,4 @@ export const pizzaCart = [
     count: 1,
     img: 'https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_com.jpg?alt=media&token=e7cde87a-08d5-4040-ac54-90f6c31eb3e3'
   }
-]
+] */

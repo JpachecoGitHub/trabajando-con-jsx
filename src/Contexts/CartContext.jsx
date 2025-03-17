@@ -30,23 +30,6 @@ const CartProvider = ({ children }) => {
     })
   }
 
-  /* const agregarAlCarrito = (pizza) => {
-    setCart((currItems) => {
-      const itemEncontrado = currItems.find((item) => item.id === pizza.id)
-      if (itemEncontrado) {
-        return currItems.map((item) => {
-          if (item.id === pizza.id) {
-            return { ...item, quantity: item.quantity + 1 }
-          } else {
-            return item
-          }
-        })
-      } else {
-        return [...currItems, { ...pizza, quantity: 1 }]
-      }
-    })
-  } */
-
   const disminuir = (pizzaId) => {
     setCart((currItems) => {
       const itemEncontrado = currItems.find((item) => item.id === pizzaId)

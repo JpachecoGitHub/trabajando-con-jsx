@@ -1,34 +1,43 @@
 import React, { useEffect, useState } from 'react'
 import Button from '../components/Button'
-
-const URL = 'http://localhost:5000/api/pizzas/p001'
+import { useParams } from 'react-router-dom'
 
 const Pizza = () => {
-  const [pizza, setPizza] = useState(null)
+  const { id } = useParams()
 
-  const getPizza = async () => {
-    try {
-      const resp = await fetch(URL)
-      if (!resp.ok) {
-        throw new Error(`HTTP error! status: ${resp.status}`)
-      }
-      const data = await resp.json()
-      setPizza(data)
-    } catch (error) {
-      console.error('Error fetching pizza data:', error)
-      setPizza(null)
-    }
-  }
+  const [pizza, setPizza] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
-    getPizza()
-  }, [])
+    const fetchPizza = async () => {
+      try {
+        setLoading(true)
+        const response = await fetch(`/api/pizzas/${id}`)
+        if (!response.ok) {
+          if (response.status === 404) {
+            throw new Error('No se encontró ningúna pizza con este ID')
+          } else {
+            throw new Error('Error al cargar los datos de la pizza')
+          }
+        }
+        const data = await response.json()
+        setPizza(data)
+        setLoading(false)
+      } catch (err) {
+        setError(err.message)
+        setLoading(false)
+      }
+    }
 
-  if (pizza === null) {
-    return <div>Cargando...</div>
-  }
+    fetchPizza()
+  }, [id])
 
-  const { img, name, price, ingredients, desc, id } = pizza
+  if (loading) return <div>Cargando...</div>
+  if (error) return <div>Error: {error}</div>
+  if (!pizza) return <div>Pizza no encontrada</div>
+
+  const { img, name, price, ingredients, desc } = pizza
 
   return (
     <div className='container mt-5 d-flex justify-content-center'>
@@ -58,14 +67,14 @@ const Pizza = () => {
                   <p className='card-text'>Precio: {price}</p>
                   <Button
                     className='btn btn-dark'
-                    style={{ height: '40px' }} text='Añadir 🛒'
+                    style={{ height: '40px' }}
+                    text='Añadir 🛒'
                   />
                 </div>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   )

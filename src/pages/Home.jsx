@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import Header from '../components/Header'
 import CardPizza from '../components/CardPizza/CardPizza'
-// import { pizzas } from './Pizza'
 
 const URL = 'http://localhost:5000/api/pizzas'
 
