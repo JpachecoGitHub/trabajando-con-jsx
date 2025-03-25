@@ -13,11 +13,12 @@ const Home = () => {
     setLoading(true)
     setError(null)
     try {
-      const resp = await fetch(URL)
-      if (!resp.ok) {
-        throw new Error(`HTTP error! status: ${resp.status}`)
+      const res = await fetch(URL)
+      console.log(res)
+      if (!res.ok) {
+        throw new Error(`HTTP error! status: ${res.status}`)
       }
-      const data = await resp.json()
+      const data = await res.json()
       setPizzas(data)
     } catch (err) {
       setError(err)

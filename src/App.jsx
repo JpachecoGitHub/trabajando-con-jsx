@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { Home, Cart, Footer, Navegador, RegisterPage, LoginPage, NotFound, Profile, Pizza } from './components/index'
 import CartProvider from './Contexts/CartContext'
-import UserProvider, { UserContext } from './Contexts/UserContext'
+import UserProvider, { UserContext } from './Contexts/userContext'
 import { useContext } from 'react'
 
 const App = () => {

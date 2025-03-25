@@ -1,6 +1,11 @@
-import { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../Contexts/userContext'
 
 const LoginPage = () => {
+  const { login } = useContext(UserContext)
+  const navigate = useNavigate()
+
   const [users, setUsers] = useState({
     email: '',
     password: ''
@@ -22,6 +27,13 @@ const LoginPage = () => {
     if (password.length < 6) {
       alert('La contraseña debe tener un minimo de 6 caracteres')
       return
+    }
+
+    try {
+      await login(users)
+      navigate('/profile')
+    } catch (error) {
+      alert('Error al iniciar sesión. Por favor, revise sus credenciales.')
     }
 
     alert('Registro Exitoso')

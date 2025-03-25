@@ -1,7 +1,7 @@
 import { useContext } from 'react'
 import Button from '../components/Button'
 import { CartContext } from '../Contexts/CartContext'
-import { UserContext } from '../Contexts/UserContext'
+import { UserContext } from '../Contexts/userContext'
 
 const Cart = () => {
   const { cart, calcularTotal, aumentar, disminuir } = useContext(CartContext)

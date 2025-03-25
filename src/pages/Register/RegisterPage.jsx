@@ -1,11 +1,18 @@
-import { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { UserContext } from '../../Contexts/userContext'
 
 const RegisterPage = () => {
+  const { register } = useContext(UserContext)
+  const navigate = useNavigate()
+
   const [users, setUsers] = useState({
     email: '',
     password: '',
     confirmPassword: ''
   })
+
+  const [error, setError] = useState(null)
 
   const handleChange = (e) => {
     setUsers({ ...users, [e.target.name]: e.target.value })
@@ -13,24 +20,31 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    setError(null)
 
     const { email, password, confirmPassword } = users
     if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
-      alert('Todos los campos deben estar llenos')
+      setError('Todos los campos deben estar llenos.')
       return
     }
 
     if (password.length < 6) {
-      alert('La contraseña debe tener un minimo de 6 caracteres')
+      setError('La contraseña debe tener un minimo de 6 caracteres')
       return
     }
 
     if (password !== confirmPassword) {
-      alert('Las contraseñas no coinciden')
+      setError('Las contraseñas no coinciden')
       return
     }
 
-    alert('Registro Exitoso')
+    try {
+      await register({ email, password })
+      navigate('/profile')
+    } catch (err) {
+      setError('Error en el registro. Inténtalo de nuevo.')
+    }
+
     setUsers({ email: '', password: '', confirmPassword: '' })
   }
 
@@ -39,7 +53,7 @@ const RegisterPage = () => {
       <section className='card mx-auto shadow-sm' style={{ maxWidth: '400px' }}>
         <div className='card-body'>
           <h2 className='card-title text-center fw-bold justify-content-center'> Registrate</h2>
-
+          {error && <div className='alert alert-danger'>{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className='mb-3'>
               <label htmlFor='email' className='form-label'>
