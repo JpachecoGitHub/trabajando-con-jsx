@@ -1,14 +1,15 @@
 import React, { useContext } from 'react'
-import Button from '../Button'
 import { CartContext } from '../../Contexts/CartContext'
 import { useNavigate } from 'react-router-dom'
+import Button from '../Button'
+
 // import { Link } from 'react-router-dom'
 
 const Cardpizza = ({ img, name, price, ingredients, desc, id }) => {
   const navigate = useNavigate()
 
   const irAPizzas = () => {
-    navigate(`/api/pizzas/${id}`)
+    navigate(`/pizzas/${id}`)
   }
 
   const { agregarAlCarrito } = useContext(CartContext)

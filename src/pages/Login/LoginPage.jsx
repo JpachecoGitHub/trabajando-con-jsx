@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserContext } from '../../Contexts/userContext'
+import { UserContext } from '../../Contexts/UserContext'
 
 const LoginPage = () => {
   const { login } = useContext(UserContext)
@@ -29,15 +29,14 @@ const LoginPage = () => {
       return
     }
 
+    console.log(users)
+
     try {
-      await login(users)
+      await login(users.email, users.password)
       navigate('/profile')
     } catch (error) {
-      alert('Error al iniciar sesión. Por favor, revise sus credenciales.')
+      alert('Error al iniciar sesión. Por favor, revise sus credenciales.' + error.message)
     }
-
-    alert('Registro Exitoso')
-    setUsers({ email: '', password: '' })
   }
 
   return (
@@ -58,7 +57,7 @@ const LoginPage = () => {
                 value={users.email}
                 onChange={handleChange}
                 className='form-control'
-                placeholder='Enter your email'
+                placeholder='Ingresa tu email'
               />
             </div>
 
@@ -72,7 +71,7 @@ const LoginPage = () => {
                 value={users.password}
                 onChange={handleChange}
                 className='form-control'
-                placeholder='Enter your password'
+                placeholder='Ingresa tu password'
               />
             </div>
 

@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
-import Button from '../components/Button'
+import React, { useContext, useEffect, useState } from 'react'
+import Button from '../Components/Button'
 import { useParams } from 'react-router-dom'
+import { CartContext } from '../Contexts/CartContext'
 
 const Pizza = () => {
   const { id } = useParams()
@@ -9,23 +10,44 @@ const Pizza = () => {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
 
+  const { agregarAlCarrito } = useContext(CartContext)
+
+  const handleAgregarAlCarrito = () => {
+    if (pizza) {
+      console.log('Agregando al carrito:', {
+        id: pizza.id,
+        name: pizza.name,
+        price: pizza.price,
+        img: pizza.img,
+        desc: pizza.desc
+      })
+      agregarAlCarrito({
+        id: pizza.id,
+        name: pizza.name,
+        price: pizza.price,
+        img: pizza.img
+      })
+    }
+  }
+
   useEffect(() => {
     const fetchPizza = async () => {
       try {
         setLoading(true)
-        const response = await fetch(`/api/pizzas/${id}`)
-        if (!response.ok) {
-          if (response.status === 404) {
+        const res = await fetch(`http://localhost:3000/api/pizzas/${id}`)
+        if (!res.ok) {
+          if (res.status === 404) {
             throw new Error('No se encontró ningúna pizza con este ID')
           } else {
             throw new Error('Error al cargar los datos de la pizza')
           }
         }
-        const data = await response.json()
+
+        const data = await res.json()
         setPizza(data)
         setLoading(false)
-      } catch (err) {
-        setError(err.message)
+      } catch (error) {
+        setError(error.message)
         setLoading(false)
       }
     }
@@ -69,6 +91,7 @@ const Pizza = () => {
                     className='btn btn-dark'
                     style={{ height: '40px' }}
                     text='Añadir 🛒'
+                    onClick={handleAgregarAlCarrito}
                   />
                 </div>
               </div>

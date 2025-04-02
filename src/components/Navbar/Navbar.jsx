@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Container, Nav, Navbar, Button } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import { CartContext } from '../../Contexts/CartContext'
-import { UserContext } from '../../Contexts/userContext'
+import { UserContext } from '../../Contexts/UserContext'
 
 const Navegador = () => {
   const { cart, calcularTotal } = useContext(CartContext)

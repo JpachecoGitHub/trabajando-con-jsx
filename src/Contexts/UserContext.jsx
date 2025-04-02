@@ -3,43 +3,63 @@ import { createContext, useEffect, useState } from 'react'
 
 export const UserContext = createContext()
 
-const UserProvider = ({ children }) => {
+export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null)
-
   const [token, setToken] = useState(localStorage.getItem('token') || null)
 
   console.log('UserProvider token:', token)
 
-  const register = async (email, password) => {
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (token) {
+        try {
+          const profile = await getProfile()
+          setUser(profile)
+        } catch (error) {
+          console.error('Error al cargar el perfil al inicio:', error)
+        }
+      }
+    }
+    fetchUser()
+  }, [])
+
+  const register = async ({ email, password, confirmPassword }) => {
     try {
-      const URL = '/api/auth/register'
-      const res = await axios.post(URL, { email, password })
+      const res = await axios.post('http://localhost:3000/api/auth/register', { email, password, confirmPassword })
       console.log(res)
-      const { token } = res.data
-      setUser({ email })
+      const { token, email: userEmail } = res.data
+      setUser({ email: userEmail })
       setToken(token)
       console.log('Usuario registrado', res.data)
+      return res.data
     } catch (error) {
-      console.log('Error al registrarse')
+      console.log('Error al registrarse', error)
     }
   }
 
   const login = async (email, password) => {
     try {
-      const URL = '/api/auth/login'
+      const URL = 'http://localhost:3000/api/auth/login'
       const payload = { email, password }
-      const user = await axios.post(URL, payload)
-      console.log('user', user)
-      localStorage.setItem('token', user.data.token)
-      console.log('user', user.data)
+      const res = await axios.post(URL, payload)
+      console.log('user', res.data)
+
+      if (res.data && res.data.token) {
+        localStorage.setItem('token', res.data.token)
+        setToken(res.data.token)
+        setUser({ email: res.data.email })
+        return res.data
+      } else {
+        console.error('Token no recibido en la respuesta del login.')
+      }
     } catch (error) {
-      console.error(error)
+      console.error('Error en el login:', error)
     }
   }
 
   useEffect(() => {
     token ? localStorage.setItem('token', token) : localStorage.removeItem('token')
-  })
+  }, [token])
 
   const logout = () => {
     setUser(null)
@@ -50,11 +70,12 @@ const UserProvider = ({ children }) => {
 
   const getProfile = async () => {
     try {
-      const response = await axios.get('/api/auth/me', {
+      const response = await axios.get('http://localhost:3000/api/auth/me', {
         headers: {
-          Authorization: `bearer ${token}`
+          Authorization: `Bearer ${token}`
         }
       })
+      setUser(response.data)
       return response.data
     } catch (error) {
       console.error('No se pudo conseguir profile:', error)
@@ -67,7 +88,8 @@ const UserProvider = ({ children }) => {
     logout,
     login,
     register,
-    getProfile
+    getProfile,
+    token
   }
 
   return (

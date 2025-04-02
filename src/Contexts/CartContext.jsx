@@ -63,12 +63,17 @@ const CartProvider = ({ children }) => {
     setCart(newCart)
   }
 
+  const limpiarCarrito = () => {
+    setCart([])
+  }
+
   const stateGlobal = {
     cart,
     calcularTotal,
     aumentar,
     disminuir,
-    agregarAlCarrito
+    agregarAlCarrito,
+    limpiarCarrito
   }
 
   return (

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import Header from '../components/Header'
-import CardPizza from '../components/CardPizza/CardPizza'
+import Header from '../Components/Header'
+import Cardpizza from '../Components/CardPizza/CardPizza'
 
-const URL = 'http://localhost:5000/api/pizzas'
+const URL = 'http://localhost:3000/api/pizzas'
 
 const Home = () => {
   const [pizzas, setPizzas] = useState([])
@@ -20,8 +20,8 @@ const Home = () => {
       }
       const data = await res.json()
       setPizzas(data)
-    } catch (err) {
-      setError(err)
+    } catch (error) {
+      setError(error)
     } finally {
       setLoading(false)
     }
@@ -46,7 +46,7 @@ const Home = () => {
       <main className='container my-2 py-2'>
         <div className='row row-cols-1 row-cols-md-3 g-4'>
           {pizzas.map((pizza) => (
-            <CardPizza
+            <Cardpizza
               key={pizza.id}
               img={pizza.img}
               name={pizza.name}

@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { UserContext } from '../../Contexts/userContext'
+import Swal from 'sweetalert2'
+import { UserContext } from '../../Contexts/UserContext'
 
 const RegisterPage = () => {
   const { register } = useContext(UserContext)
@@ -13,6 +14,7 @@ const RegisterPage = () => {
   })
 
   const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
     setUsers({ ...users, [e.target.name]: e.target.value })
@@ -21,6 +23,7 @@ const RegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setError(null)
+    setLoading(true)
 
     const { email, password, confirmPassword } = users
     if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
@@ -38,10 +41,19 @@ const RegisterPage = () => {
       return
     }
 
+    console.log(users)
+
     try {
-      await register({ email, password })
+      await register({ email, password, confirmPassword })
+      Swal.fire({
+        icon: 'success',
+        title: '¡Registro exitoso!',
+        text: 'Redirigiendo al perfil...',
+        timer: 2000,
+        showConfirmButton: false
+      })
       navigate('/profile')
-    } catch (err) {
+    } catch (error) {
       setError('Error en el registro. Inténtalo de nuevo.')
     }
 
@@ -65,7 +77,7 @@ const RegisterPage = () => {
                 value={users.email}
                 onChange={handleChange}
                 className='form-control'
-                placeholder='Enter your email'
+                placeholder='Enter en tu email'
               />
             </div>
 
@@ -79,7 +91,7 @@ const RegisterPage = () => {
                 value={users.password}
                 onChange={handleChange}
                 className='form-control'
-                placeholder='Enter your password'
+                placeholder='Enter en tu  password'
               />
             </div>
 
@@ -93,14 +105,14 @@ const RegisterPage = () => {
                 value={users.confirmPassword}
                 onChange={handleChange}
                 className='form-control'
-                placeholder='Confirm your password'
+                placeholder='Confirma tu password'
               />
             </div>
 
             <button
               type='submit'
               className='btn btn-success w-100 mt-3 fw-bold fs-5'
-              disabled=''
+              disabled={loading}
             >
               Crear cuenta
             </button>
