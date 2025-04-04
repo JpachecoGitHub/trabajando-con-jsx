@@ -1,17 +1,17 @@
-import { useContext, useState } from 'react';
-import Button from '../Components/Button';
-import { CartContext } from '../Contexts/CartContext';
-import axios from 'axios';
-import { UserContext } from '../Contexts/UserContext';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react'
+import Button from '../Components/Button'
+import { CartContext } from '../Contexts/CartContext'
+import axios from 'axios'
+import { UserContext } from '../Contexts/UserContext'
+import { useNavigate } from 'react-router-dom'
 
 const Cart = () => {
-  console.log('Componente Cart renderizado.');
-  const { cart, calcularTotal, aumentar, disminuir, limpiarCarrito } = useContext(CartContext);
-  const { token } = useContext(UserContext);
-  const [mensajeExito, setMensajeExito] = useState(null);
-  const [errorEnvio, setErrorEnvio] = useState(null);
-  const navigate = useNavigate();
+  console.log('Componente Cart renderizado.')
+  const { cart, calcularTotal, aumentar, disminuir, limpiarCarrito } = useContext(CartContext)
+  const { token } = useContext(UserContext)
+  const [mensajeExito, setMensajeExito] = useState(null)
+  const [errorEnvio, setErrorEnvio] = useState(null)
+  const navigate = useNavigate()
 
   if (!cart || cart.length === 0) {
     return (
@@ -21,31 +21,31 @@ const Cart = () => {
           <p className='text-center'>El carrito está vacío.</p>
         </div>
       </div>
-    );
+    )
   }
 
   const checkout = async () => {
-    console.log('Función checkout llamada.');
+    console.log('Función checkout llamada.')
     if (!token) {
-      navigate('/login');
-      return;
+      navigate('/login')
+      return
     }
     try {
       const res = await axios.post('http://localhost:3000/api/checkouts', { cart }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      });
-      console.log('Respuesta del servidor:', res.data);
-      setMensajeExito('Compra realizada con éxito.');
-      limpiarCarrito();
-      setErrorEnvio(null);
+      })
+      console.log('Respuesta del servidor:', res.data)
+      setMensajeExito('Compra realizada con éxito.')
+      limpiarCarrito()
+      setErrorEnvio(null)
     } catch (error) {
-      console.error('Error al realizar el checkout:', error);
-      setErrorEnvio('Hubo un error al realizar la compra. Inténtalo de nuevo.');
-      setMensajeExito(null);
+      console.error('Error al realizar el checkout:', error)
+      setErrorEnvio('Hubo un error al realizar la compra. Inténtalo de nuevo.')
+      setMensajeExito(null)
     }
-  };
+  }
 
   return (
     <div className='container mt-5 d-flex justify-content-center'>
@@ -121,7 +121,7 @@ const Cart = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 export default Cart
