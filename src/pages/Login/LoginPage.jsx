@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { UserContext } from '../../Contexts/UserContext'
+import Swal from 'sweetalert2'
 
 const LoginPage = () => {
   const { login } = useContext(UserContext)
@@ -33,6 +34,13 @@ const LoginPage = () => {
 
     try {
       await login(users.email, users.password)
+      Swal.fire({
+        icon: 'success',
+        title: '¡Inicio de sesion exitoso!',
+        text: 'Redirigiendo al perfil...',
+        timer: 2000,
+        showConfirmButton: false
+      })
       navigate('/profile')
     } catch (error) {
       alert('Error al iniciar sesión. Por favor, revise sus credenciales.' + error.message)
@@ -40,8 +48,9 @@ const LoginPage = () => {
   }
 
   return (
-    <main className='container-fluid vh-100 alien-items-center justify-content-center'>
-      {/* <div className="row justify-content-center">
+    <main className='container mt-5'>
+      {/* <main className='container-fluid vh-100 alien-items-center justify-content-center'>
+      <div className="row justify-content-center">
         <div className="col-12 col-md-6"> */}
       <section className='card mx-auto shadow-sm mt-5' style={{ maxWidth: '400px' }}>
         <div className='card-body'>

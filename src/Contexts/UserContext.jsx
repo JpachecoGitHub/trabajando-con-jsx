@@ -9,6 +9,20 @@ export const UserProvider = ({ children }) => {
 
   console.log('UserProvider token:', token)
 
+  const register = async (email, password, confirmPassword) => {
+    try {
+      const res = await axios.post('http://localhost:3000/api/auth/register', { email, password, confirmPassword })
+      console.log(res)
+      const { token } = res.data
+      setUser({ email })
+      setToken(token)
+      console.log('Usuario registrado', res.data)
+      return res.data
+    } catch (error) {
+      console.log('Error al registrarse')
+    }
+  }
+
   useEffect(() => {
     const fetchUser = async () => {
       if (token) {
@@ -22,20 +36,6 @@ export const UserProvider = ({ children }) => {
     }
     fetchUser()
   }, [])
-
-  const register = async ({ email, password, confirmPassword }) => {
-    try {
-      const res = await axios.post('http://localhost:3000/api/auth/register', { email, password, confirmPassword })
-      console.log(res)
-      const { token, email: userEmail } = res.data
-      setUser({ email: userEmail })
-      setToken(token)
-      console.log('Usuario registrado', res.data)
-      return res.data
-    } catch (error) {
-      console.log('Error al registrarse', error)
-    }
-  }
 
   const login = async (email, password) => {
     try {
@@ -53,7 +53,7 @@ export const UserProvider = ({ children }) => {
         console.error('Token no recibido en la respuesta del login.')
       }
     } catch (error) {
-      console.error('Error en el login:', error)
+      console.error('Error en el login', error)
     }
   }
 
@@ -88,8 +88,7 @@ export const UserProvider = ({ children }) => {
     logout,
     login,
     register,
-    getProfile,
-    token
+    getProfile
   }
 
   return (

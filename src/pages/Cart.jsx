@@ -25,17 +25,17 @@ const Cart = () => {
   const checkout = async () => {
     console.log('Función checkout llamada.')
     try {
-      const res = await axios.post('http://localhost:3000/api/checkouts', { cart }, {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`
+      const res = await axios.post(
+        'http://localhost:3000/api/checkouts', { cart }, {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`
+          }
         }
-      }
       )
 
       console.log('Respuesta del servidor:', res.data)
       setMensajeExito('Compra realizada con éxito.')
-      // console.log('Estado mensajeExito actualizado:', 'Compra realizada con éxito.')
       limpiarCarrito()
       setErrorEnvio(null)
     } catch (error) {
@@ -52,7 +52,11 @@ const Cart = () => {
 
         {console.log('Valor de mensajeExito:', mensajeExito)}
 
-        {mensajeExito && <div key='mensajeExito' className='alert alert-success'>{mensajeExito}</div>}
+        {mensajeExito && (
+          <div key='mensajeExito' className='alert alert-success'>
+            {mensajeExito}
+          </div>
+        )}
         {errorEnvio && <div className='alert alert-danger'>{errorEnvio}</div>}
 
         {cart.map((item) => (
@@ -102,7 +106,6 @@ const Cart = () => {
           <h3> Total: $ {calcularTotal(cart)} </h3>
         </div>
         <div className='d-flex justify-content-center mb-3'>
-
           <Button
             text='Pagar'
             className='btn btn-dark'

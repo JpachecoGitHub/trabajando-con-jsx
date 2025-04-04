@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
 import Button from '../Components/Button'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { CartContext } from '../Contexts/CartContext'
 
 const Pizza = () => {
   const { id } = useParams()
+  const navigate = useNavigate()
 
   const [pizza, setPizza] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -27,6 +28,7 @@ const Pizza = () => {
         price: pizza.price,
         img: pizza.img
       })
+      navigate('/')
     }
   }
 

@@ -3,6 +3,7 @@ import { Container, Nav, Navbar, Button } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import { CartContext } from '../../Contexts/CartContext'
 import { UserContext } from '../../Contexts/UserContext'
+import Swal from 'sweetalert2'
 
 const Navegador = () => {
   const { cart, calcularTotal } = useContext(CartContext)
@@ -12,6 +13,23 @@ const Navegador = () => {
   const Total = calcularTotal(cart)
 
   const validateRoot = ({ isActive }) => isActive ? 'nav-link active' : 'nav-link'
+
+  const handleLogout = () => {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: '¿Deseas cerrar sesión?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, cerrar sesión',
+      cancelButtonText: 'Cancelar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        logout()
+      }
+    })
+  }
 
   return (
     <Navbar expand='lg' bg='dark' variant='dark' className='shadow-ms'>
@@ -31,7 +49,7 @@ const Navegador = () => {
                   <Nav.Link as={NavLink} to='/profile' className={validateRoot}>
                     🔓 Profile
                   </Nav.Link>
-                  <Nav.Link onClick={logout} className={validateRoot}>
+                  <Nav.Link onClick={handleLogout} className={validateRoot}>
                     🔒 Logout
                   </Nav.Link>
                 </>
