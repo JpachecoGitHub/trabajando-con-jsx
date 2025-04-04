@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import Button from '../Components/Button'
 import { useParams, useNavigate } from 'react-router-dom'
 import { CartContext } from '../Contexts/CartContext'
+import { UserContext } from '../Contexts/UserContext'
 
 const Pizza = () => {
   const { id } = useParams()
@@ -12,8 +13,13 @@ const Pizza = () => {
   const [error, setError] = useState(null)
 
   const { agregarAlCarrito } = useContext(CartContext)
+  const { user } = useContext(UserContext)
 
   const handleAgregarAlCarrito = () => {
+    if (!user) {
+      navigate('/login')
+      return
+    }
     if (pizza) {
       console.log('Agregando al carrito:', {
         id: pizza.id,

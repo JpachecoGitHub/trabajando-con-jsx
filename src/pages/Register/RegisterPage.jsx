@@ -13,8 +13,8 @@ const RegisterPage = () => {
     confirmPassword: ''
   })
 
-  // const [error, setError] = useState(null)
-  // const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
     setUsers({ ...users, [e.target.name]: e.target.value })
@@ -22,24 +22,24 @@ const RegisterPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    // setError(null)
-    // setLoading(true)
+    setError(null)
+    setLoading(true)
 
     const { email, password, confirmPassword } = users
     if (!email.trim() || !password.trim() || !confirmPassword.trim()) {
-      // setError('Todos los campos deben estar llenos.')
+      setError('Todos los campos deben estar llenos.')
       alert('Todos los campos deben estar llenos')
       return
     }
 
     if (password.length < 6) {
-      // setError('La contraseña debe tener un minimo de 6 caracteres')
+      setError('La contraseña debe tener un minimo de 6 caracteres')
       alert('La contraseña debe tener un minimo de 6 caracteres')
       return
     }
 
     if (password !== confirmPassword) {
-      // setError('Las contraseñas no coinciden')
+      setError('Las contraseñas no coinciden')
       alert('Las contraseñas no coinciden')
       return
     }
@@ -47,7 +47,7 @@ const RegisterPage = () => {
     console.log(users)
 
     try {
-      await register({ email: users.email, password: users.password, confirmPassword: users.confirmPassword })
+      await register({ email, password, confirmPassword })
       Swal.fire({
         icon: 'success',
         title: '¡Registro exitoso!',
@@ -57,10 +57,10 @@ const RegisterPage = () => {
       })
       navigate('/profile')
     } catch (error) {
-      // setError('Error en el registro. Inténtalo de nuevo.' + error.message)
+      setError('Error en el registro. Inténtalo de nuevo.' + error.message)
       alert('Error en el registro. Inténtalo de nuevo.' + error.message)
     }
-    // setUsers({ email: '', password: '', confirmPassword: '' })
+    setUsers({ email: '', password: '', confirmPassword: '' })
   }
 
   return (
@@ -68,7 +68,7 @@ const RegisterPage = () => {
       <section className='card mx-auto shadow-sm' style={{ maxWidth: '400px' }}>
         <div className='card-body'>
           <h2 className='card-title text-center fw-bold justify-content-center'> Registrate</h2>
-          {/* {error && <div className='alert alert-danger'>{error}</div>} */}
+          {error && <div className='alert alert-danger'>{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className='mb-3'>
               <label htmlFor='email' className='form-label'>
@@ -115,7 +115,7 @@ const RegisterPage = () => {
             <button
               type='submit'
               className='btn btn-success w-100 mt-3 fw-bold fs-5'
-              // disabled={loading}
+              disabled={loading}
             >
               Crear cuenta
             </button>
